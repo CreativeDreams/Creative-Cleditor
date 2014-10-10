@@ -3,7 +3,7 @@
 $PluginInfo['CreativeCLEditor'] = array(
     'Name'                 => 'CreativeCLEditor',
     'Description'          => 'Adds a <a href="http://premiumsoftware.net/cleditor/" target="_blank">WYSIWYG Editor</a> on discussions and comments.',
-    'Version'              => '1.0',
+    'Version'              => '1.1',
     'PluginUrl'            => 'http://www.creativedreams.eu/creative-cleditor',
     'Author'               => "Creative Dreams",
     'AuthorEmail'          => 'sandro@creativedreams.eu',
