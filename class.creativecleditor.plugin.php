@@ -3,7 +3,7 @@
 $PluginInfo['CreativeCLEditor'] = array(
     'Name'                 => 'CreativeCLEditor',
     'Description'          => 'Adds a <a href="http://premiumsoftware.net/cleditor/" target="_blank">WYSIWYG Editor</a> on discussions and comments.',
-    'Version'              => '1.1',
+    'Version'              => '1.2',
     'PluginUrl'            => 'http://www.creativedreams.eu/creative-cleditor',
     'Author'               => "Creative Dreams",
     'AuthorEmail'          => 'sandro@creativedreams.eu',
@@ -36,9 +36,7 @@ class CreativeCLEditorPlugin extends Gdn_Plugin {
 	}
 
 	private function _AddCreativeCLEditor($Sender) {
-
 		$Options = array('ie' => 'gt IE 6', 'notie' => TRUE);
-		$Sender->RemoveJsFile('jquery.autogrow.js');
 
 		$Sender->AddCssFile('jquery.cleditor.css', 'plugins/CreativeCLEditor', $Options);
 		$Sender->AddJsFile('jquery.cleditor.js', 'plugins/CreativeCLEditor', $Options);
@@ -50,7 +48,6 @@ class CreativeCLEditorPlugin extends Gdn_Plugin {
         $CssPath = $CssInfo ? Asset($CssInfo[1]) : '';
 
         $Sender->Head->AddString('<script type="text/javascript">var cleditor_doc_css_file = \''.$CssPath.'\';</script>');
-
    }
 
 }
