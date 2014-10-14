@@ -3,7 +3,7 @@
 .cleditorPopup,
 .cleditorMain * {-moz-box-sizing:content-box; -webkit-box-sizing:content-box; box-sizing:content-box}
 .cleditorMain iframe {border:none; margin:0; padding:0}
-.cleditorMain textarea {overflow-y:scroll; font:10pt Arial,Verdana; resize:none; outline:none}
+.cleditorMain textarea {overflow-y:scroll; resize:none; outline:none}
 .cleditorToolbar {background: url('images/toolbar.gif') repeat}
 .cleditorGroup {float:left; height:26px}
 .cleditorButton {float:left; width:24px; height:24px; margin:1px 0 1px 0; background: url('images/buttons.gif')}
@@ -24,3 +24,8 @@
 .cleditorPrompt {background-color:#F6F7F9; padding:8px; font-size:8.5pt}
 .cleditorPrompt label {padding-bottom:8px}
 .cleditorMsg {background-color:#FDFCEE; width:150px; padding:4px; font-size:8.5pt}
+
+/* Smoother initialization*/
+.cleditorMain {visibility:hidden}
+.EditCommentForm textarea.TextBox,
+.CommentForm textarea.TextBox{display:none}
