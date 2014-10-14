@@ -99,6 +99,7 @@ function imageUploadButton(e, data) {
 
         // Get the entered name
         var name = $(data.popup).find(":text").val();
+        $(data.popup).find(":text").val('http://');
 
         // Insert some html into the document
         var html = '<img src="' + name + '">';
