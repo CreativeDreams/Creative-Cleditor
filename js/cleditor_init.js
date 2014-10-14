@@ -3,7 +3,7 @@
 //==================================================================================================
 var cleditor_config = {
     width:      "100%", // width not including margins, borders or padding
-    height:     "100%", // height not including margins, borders or padding
+    height:     "auto", // height not including margins, borders or padding
     controls: // controls to add to the toolbar
                 "bold italic underline strikethrough subscript superscript | font size " +
                 "style | color highlight removeformat | bullets numbering | outdent " +
@@ -30,7 +30,6 @@ var cleditor_config = {
     docCSSFile: "", // CSS file used to style the document contained within the editor
     bodyStyle:  "margin:4px; font:10pt Arial,Verdana; cursor:text" // style to assign to document body contained within the editor
 }
-
 //==================================================================================================
 
 // Merge the new config with the default config
@@ -47,7 +46,7 @@ $(function(){
 
         var bodyStyle = 'background: transparent !important; cursor:text !important; margin: 0 !important; padding: 0 !important;';
         bodyStyle += ' font-size: '+$('.cleditorMain').css('font-size')+';';
-        bodyStyle += ' font-family: '+$('.cleditorMain').css('font-family')+';';
+        bodyStyle += ' font-family: '+$('.cleditorMain').css('font-family').replace(/\"/g, "'")+';';
         bodyStyle += ' font-weigth: '+$('.cleditorMain').css('font-weight')+';';
         bodyStyle += ' font-style: '+$('.cleditorMain').css('font-style')+';';
         bodyStyle += ' line-height: '+$('.cleditorMain').css('line-height')+';';
@@ -56,9 +55,6 @@ $(function(){
 
         $('#cleditorMainTmp').remove();
     }
-
-    // Make sure the removal of autogrow does not break anything
-    $.fn.autogrow = function(o) { return; }
 
     // Attach the editor to comment boxes.
     $("textarea.BodyBox").livequery(function() {
@@ -69,6 +65,28 @@ $(function(){
         $(frm).bind("clearCommentForm", {editor:ed}, function(e) {
             frm.find("textarea").hide();
             e.data.editor.clear();
+        });
+
+        // Autogrow
+        var iframe_aux = frm.find("iframe");
+        $(iframe_aux).load(function() {
+            $(iframe_aux).height($(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).css('padding-top')) + parseInt($(iframe_aux).css('padding-bottom')) + parseInt($(iframe_aux).contents().find("body").css('line-height')));
+            frm.find(".cleditorMain").css('visibility','visible');
+        });
+        $(ed).bind("change",function(){
+            var iframe_aux = frm.find("iframe");
+            if($(iframe_aux).height()!=$(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).contents().find("body").css('line-height')))
+                $(iframe_aux).height($(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).css('padding-top')) + parseInt($(iframe_aux).css('padding-bottom')) + parseInt($(iframe_aux).contents().find("body").css('line-height')));
+        });
+        $(window).bind("resize.cleditor", function () {
+            var iframe_aux = frm.find("iframe");
+            $(iframe_aux).height($(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).css('padding-top')) + parseInt($(iframe_aux).css('padding-bottom')) + parseInt($(iframe_aux).contents().find("body").css('line-height')));
+        });
+        $('.cleditorButton[title="Show Source"]').click(function(){
+            var iframe_aux = frm.find("iframe");
+            var new_content_height = $(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).contents().find("body").css('line-height'));
+            if(new_content_height>0 && $(iframe_aux).height()!=new_content_height)
+                $(iframe_aux).height($(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).css('padding-top')) + parseInt($(iframe_aux).css('padding-bottom')) + parseInt($(iframe_aux).contents().find("body").css('line-height')));
         });
     });
 
