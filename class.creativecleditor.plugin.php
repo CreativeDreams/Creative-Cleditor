@@ -3,7 +3,7 @@
 $PluginInfo['CreativeCLEditor'] = array(
     'Name'                 => 'CreativeCLEditor',
     'Description'          => 'Adds a <a href="http://premiumsoftware.net/cleditor/" target="_blank">WYSIWYG Editor</a> on discussions and comments.',
-    'Version'              => '1.2',
+    'Version'              => '1.2.1',
     'PluginUrl'            => 'http://www.creativedreams.eu/creative-cleditor',
     'Author'               => "Creative Dreams",
     'AuthorEmail'          => 'sandro@creativedreams.eu',
@@ -27,11 +27,11 @@ class CreativeCLEditorPlugin extends Gdn_Plugin {
         RemoveFromConfig('Garden.Html.SafeStyles');
     }
 
-	public function PostController_Render_Before(&$Sender) {
+	public function PostController_Render_Before($Sender) {
 		$this->_AddCreativeCLEditor($Sender);
 	}
 
-	public function DiscussionController_Render_Before(&$Sender) {
+	public function DiscussionController_Render_Before($Sender) {
 		$this->_AddCreativeCLEditor($Sender);
 	}
 
