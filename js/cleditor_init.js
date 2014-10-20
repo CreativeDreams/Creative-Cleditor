@@ -3,7 +3,7 @@
 //==================================================================================================
 var cleditor_config = {
     width:      "100%", // width not including margins, borders or padding
-    height:     "auto", // height not including margins, borders or padding
+    height:     "auto", // height not including margins, borders or padding ('auto' - will activate the autogrow)
     controls: // controls to add to the toolbar
                 "bold italic underline strikethrough subscript superscript | font size " +
                 "style | color highlight removeformat | bullets numbering | outdent " +
@@ -36,6 +36,10 @@ var cleditor_config = {
 $.extend($.cleditor.defaultOptions,cleditor_config);
 
 $(function(){
+
+    // Smoother initialization
+    $('.cleditorMain').css('visibility','hidden');
+    $('.EditCommentForm textarea.TextBox,.CommentForm textarea.TextBox').css('display','none');
 
     $.cleditor.defaultOptions.docCSSFile = cleditor_doc_css_file;
 
@@ -70,24 +74,27 @@ $(function(){
         // Autogrow
         var iframe_aux = frm.find("iframe");
         $(iframe_aux).load(function() {
-            $(iframe_aux).height($(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).css('padding-top')) + parseInt($(iframe_aux).css('padding-bottom')) + parseInt($(iframe_aux).contents().find("body").css('line-height')));
+            if($.cleditor.defaultOptions.height=='auto')
+                $(iframe_aux).height($(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).css('padding-top')) + parseInt($(iframe_aux).css('padding-bottom')) + parseInt($(iframe_aux).contents().find("body").css('line-height')));
             frm.find(".cleditorMain").css('visibility','visible');
         });
-        $(ed).bind("change",function(){
-            var iframe_aux = frm.find("iframe");
-            if($(iframe_aux).height()!=$(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).contents().find("body").css('line-height')))
+        if($.cleditor.defaultOptions.height=='auto'){
+            $(ed).bind("change",function(){
+                var iframe_aux = frm.find("iframe");
+                if($(iframe_aux).height()!=$(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).contents().find("body").css('line-height')))
+                    $(iframe_aux).height($(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).css('padding-top')) + parseInt($(iframe_aux).css('padding-bottom')) + parseInt($(iframe_aux).contents().find("body").css('line-height')));
+            });
+            $(window).bind("resize.cleditor", function () {
+                var iframe_aux = frm.find("iframe");
                 $(iframe_aux).height($(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).css('padding-top')) + parseInt($(iframe_aux).css('padding-bottom')) + parseInt($(iframe_aux).contents().find("body").css('line-height')));
-        });
-        $(window).bind("resize.cleditor", function () {
-            var iframe_aux = frm.find("iframe");
-            $(iframe_aux).height($(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).css('padding-top')) + parseInt($(iframe_aux).css('padding-bottom')) + parseInt($(iframe_aux).contents().find("body").css('line-height')));
-        });
-        $('.cleditorButton[title="Show Source"]').click(function(){
-            var iframe_aux = frm.find("iframe");
-            var new_content_height = $(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).contents().find("body").css('line-height'));
-            if(new_content_height>0 && $(iframe_aux).height()!=new_content_height)
-                $(iframe_aux).height($(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).css('padding-top')) + parseInt($(iframe_aux).css('padding-bottom')) + parseInt($(iframe_aux).contents().find("body").css('line-height')));
-        });
+            });
+            $('.cleditorButton[title="Show Source"]').click(function(){
+                var iframe_aux = frm.find("iframe");
+                var new_content_height = $(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).contents().find("body").css('line-height'));
+                if(new_content_height>0 && $(iframe_aux).height()!=new_content_height)
+                    $(iframe_aux).height($(iframe_aux).contents().find("body").height() + parseInt($(iframe_aux).css('padding-top')) + parseInt($(iframe_aux).css('padding-bottom')) + parseInt($(iframe_aux).contents().find("body").css('line-height')));
+            });
+        }
     });
 
 });
