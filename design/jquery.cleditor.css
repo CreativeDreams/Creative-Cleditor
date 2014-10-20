@@ -24,8 +24,3 @@
 .cleditorPrompt {background-color:#F6F7F9; padding:8px; font-size:8.5pt}
 .cleditorPrompt label {padding-bottom:8px}
 .cleditorMsg {background-color:#FDFCEE; width:150px; padding:4px; font-size:8.5pt}
-
-/* Smoother initialization*/
-.cleditorMain {visibility:hidden}
-.EditCommentForm textarea.TextBox,
-.CommentForm textarea.TextBox{display:none}
